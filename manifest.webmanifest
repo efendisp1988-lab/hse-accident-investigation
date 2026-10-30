@@ -1,0 +1,16 @@
+{
+  "id": "./",
+  "name": "HSE Accident Investigation",
+  "short_name": "HSE Investigasi",
+  "description": "Aplikasi personal investigasi kecelakaan kerja offline untuk perkebunan, PKS, dan bulking.",
+  "lang": "id-ID",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f6f4",
+  "theme_color": "#124734",
+  "icons": [
+    {"src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}
