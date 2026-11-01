@@ -63,6 +63,22 @@ body:has(#loginView:not(.hidden)) .wrap{max-width:620px;padding:22px 14px 34px}
 .login-premium .security-note{margin:12px 0 0;padding:13px 14px;border-radius:15px;background:#e9f5ee;color:#365b48;text-align:left;font-size:12px;line-height:1.55}
 .login-premium .security-note:before{content:'✓  ';font-weight:900;color:#087b55}
 @media(max-width:420px){body:has(#loginView:not(.hidden)) .wrap{padding:12px 10px 24px}.login-premium{margin:1vh auto 12px;padding:27px 18px 20px;border-radius:23px}.login-premium h2{font-size:24px}.login-brandname strong{font-size:20px}.login-features{margin-top:18px}.login-feature{font-size:11px}}
+
+/* V36: strengthen login typography for mobile readability */
+.login-premium{background:linear-gradient(155deg,rgba(245,255,249,.76),rgba(235,250,242,.70));}
+.login-premium,.login-premium *{text-shadow:0 1px 1px rgba(255,255,255,.48)}
+.login-brandname strong{font-weight:900!important;color:#052f20!important}
+.login-brandname small{font-weight:900!important;color:#173d2d!important}
+.login-premium h2{font-weight:900!important;color:#063d29!important}
+.login-premium .login-subtitle{font-weight:750!important;color:#173d2d!important}
+.login-premium label{font-weight:900!important;color:#102f22!important}
+.login-premium .remember{font-weight:800!important;color:#123b2a!important}
+.login-premium .login-field input,.login-premium .password-wrap input{font-weight:750!important;color:#172c22!important}
+.login-premium input::placeholder{color:#46584e!important;opacity:1;font-weight:700!important}
+.login-premium .login-submit{font-weight:900!important;text-shadow:0 1px 2px rgba(0,0,0,.22)}
+.login-feature{font-weight:850!important;color:#073d29!important}
+.login-premium .security-note{font-weight:750!important;color:#173d2d!important;background:rgba(235,249,240,.94)!important}
+
 </style></head><body>
 <header id="appHeader" class="hidden"><img id="headLogo" alt="Logo"><div><h1 id="headCompany">INVESTIGASI KECELAKAAN KERJA</h1><small id="headUnit">Professional Edition • Offline V2.5</small></div></header>
 <div class="wrap">
