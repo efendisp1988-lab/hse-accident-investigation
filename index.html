@@ -2,123 +2,47 @@
 <html lang="id">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#124734">
-<meta name="description" content="Aplikasi personal investigasi kecelakaan kerja secara offline.">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<title>HSE Accident Investigation</title>
+<meta name="theme-color" content="#14532d"><meta name="description" content="Aplikasi investigasi insiden HSE offline">
+<link rel="manifest" href="manifest.webmanifest"><title>HSE Accident Investigation</title>
 <style>
-:root{--green:#124734;--lime:#d8ef6a;--bg:#f3f6f4;--ink:#1d2923}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px Arial,sans-serif;color:var(--ink)}
-header{background:var(--green);color:white;padding:20px 16px 18px;border-bottom:5px solid var(--lime)}
-header h1{font-size:20px;margin:0 0 5px}header p{margin:0;font-size:12px;opacity:.9}
-main{max-width:760px;margin:auto;padding:14px}
-.card{background:white;border-radius:12px;padding:15px;margin:0 0 13px;box-shadow:0 2px 8px #0000000c}
-h2{font-size:16px;color:var(--green);margin:0 0 12px}
-label{display:block;font-size:13px;font-weight:bold;margin:11px 0 5px}
-input,select,textarea{width:100%;padding:11px;border:1px solid #cbd5ce;border-radius:8px;background:#fff;font:14px Arial}
-textarea{min-height:76px;resize:vertical}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-button{border:0;border-radius:9px;padding:12px 14px;font-weight:bold;background:var(--green);color:white;cursor:pointer}
-button.secondary{background:#e7eee9;color:var(--green)}button.danger{background:#a63232}
-.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}
-.small{font-size:12px;color:#59665e;line-height:1.5}
-#records .item{border:1px solid #dce5df;border-radius:8px;padding:10px;margin:8px 0}
-.badge{font-size:11px;background:#e8f2e9;color:#124734;border-radius:20px;padding:4px 8px}
-.hidden{display:none}.photoPreview img{width:80px;height:80px;object-fit:cover;border-radius:8px;margin:5px}
-footer{text-align:center;color:#6b766f;font-size:11px;padding:12px}
-@media(max-width:480px){.row{grid-template-columns:1fr}}
-@media print{header,.no-print,button,footer{display:none!important}body{background:white}.card{box-shadow:none;border:1px solid #bbb;break-inside:avoid}main{max-width:none;padding:0}}
-</style>
-</head>
-<body>
-<header><h1>HSE ACCIDENT INVESTIGATION</h1><p>Personal offline field tool · Perkebunan · PKS · Bulking</p></header>
-<main>
-<section class="card no-print">
- <div class="row"><div><b id="total">0</b><div class="small">Total investigasi tersimpan</div></div><div><b id="last">—</b><div class="small">Nomor laporan terakhir</div></div></div>
- <p class="small">Data disimpan di perangkat ini. Tidak membutuhkan koneksi internet. Lakukan ekspor cadangan secara berkala.</p>
- <div class="actions"><button onclick="newForm()">+ Investigasi Baru</button><button class="secondary" onclick="showRecords()">Riwayat</button></div>
-</section>
-<form id="investigation" class="hidden">
-<section class="card">
-<h2>A. Informasi Kejadian</h2>
-<div class="row"><div><label>Nomor laporan *</label><input name="number" required placeholder="INV-2026-001"></div><div><label>Tanggal kejadian *</label><input name="date" type="date" required></div></div>
-<div class="row"><div><label>Waktu kejadian</label><input name="time" type="time"></div><div><label>Tanggal dilaporkan</label><input name="reported" type="date"></div></div>
-<label>Unit / lokasi *</label><input name="location" required placeholder="Estate / PKS / Bulking / Workshop">
-<label>Departemen / aktivitas</label><input name="activity">
-<label>Jenis kejadian</label><select name="type"><option>Cedera</option><option>Near miss</option><option>Kerusakan aset</option><option>Kebakaran / ledakan</option><option>Lingkungan</option><option>Lainnya</option></select>
-<label>Level investigasi</label><select name="level"><option>Level 1 - Ringkas</option><option>Level 2 - Formal</option><option>Level 3 - Khusus</option></select>
-</section>
-<section class="card">
-<h2>B. Data Korban / Pihak Terlibat</h2>
-<label>Nama / inisial</label><input name="victim">
-<div class="row"><div><label>Status</label><select name="workerStatus"><option>Karyawan</option><option>Kontraktor</option><option>Tamu</option></select></div><div><label>Jabatan</label><input name="position"></div></div>
-<label>Perusahaan kontraktor (jika ada)</label><input name="contractor">
-<label>Jenis cedera / bagian tubuh / dampak</label><textarea name="injury"></textarea>
-<label>Penanganan medis / rujukan</label><textarea name="medical"></textarea>
-</section>
-<section class="card">
-<h2>C. Deskripsi dan Kronologi</h2>
-<label>Uraian kejadian (apa, siapa, di mana, kapan, bagaimana)</label><textarea name="description"></textarea>
-<label>Kondisi sebelum kejadian</label><textarea name="before"></textarea>
-<label>Kondisi saat kejadian</label><textarea name="during"></textarea>
-<label>Tindakan segera setelah kejadian</label><textarea name="after"></textarea>
-</section>
-<section class="card">
-<h2>D. Saksi dan Dokumentasi</h2>
-<label>Nama / jabatan saksi dan ringkasan keterangan</label><textarea name="witness"></textarea>
-<label>Foto dokumentasi</label><input id="photos" type="file" accept="image/*" multiple>
-<div id="photoPreview" class="photoPreview small">Foto dapat dipilih dari galeri perangkat.</div>
-<label>Catatan bukti lain (CCTV, JSA, izin kerja, checklist, logbook)</label><textarea name="evidence"></textarea>
-</section>
-<section class="card">
-<h2>E. Analisis Faktor Kontribusi (pendekatan ICAM)</h2>
-<label>Tindakan / kondisi langsung</label><textarea name="direct"></textarea>
-<label>Faktor individu (kompetensi, pengalaman, kelelahan, komunikasi)</label><textarea name="individual"></textarea>
-<label>Faktor tugas / prosedur / perencanaan / pengawasan</label><textarea name="task"></textarea>
-<label>Faktor peralatan / mesin / desain / pemeliharaan</label><textarea name="equipment"></textarea>
-<label>Faktor lingkungan / cuaca / tata letak / housekeeping</label><textarea name="environment"></textarea>
-<label>Faktor organisasi / sumber daya / perubahan / manajemen</label><textarea name="organization"></textarea>
-<label>Pengendalian yang gagal / tidak tersedia</label><textarea name="controls"></textarea>
-<label>Akar penyebab sistemik berbasis bukti</label><textarea name="root"></textarea>
-</section>
-<section class="card">
-<h2>F. Rencana Tindakan Perbaikan dan Pencegahan (CAPA)</h2>
-<label>Uraian tindakan, PIC, target tanggal, dan bukti verifikasi</label><textarea name="capa" placeholder="1. Tindakan: ... | PIC: ... | Target: ... | Verifikasi: ..."></textarea>
-<label>Risiko residual setelah tindakan</label><textarea name="residual"></textarea>
-</section>
-<section class="card">
-<h2>G. Penutup dan Persetujuan</h2>
-<label>Lesson learned / pembelajaran</label><textarea name="lesson"></textarea>
-<div class="row"><div><label>Investigator / ketua tim</label><input name="investigator"></div><div><label>Jabatan</label><input name="investigatorTitle"></div></div>
-<div class="row"><div><label>Diperiksa oleh</label><input name="reviewer"></div><div><label>Disetujui oleh</label><input name="approver"></div></div>
-<p class="small">Kolom nama/tanda tangan dapat dilengkapi setelah laporan dicetak. Versi uji coba ini belum menggunakan tanda tangan elektronik tersertifikasi.</p>
-</section>
-<div class="actions no-print">
-<button type="button" onclick="saveRecord()">Simpan Offline</button>
-<button type="button" class="secondary" onclick="printCurrent()">Cetak / Simpan PDF</button>
-<button type="button" class="secondary" onclick="goHome()">Kembali</button>
-</div>
-</form>
-<section id="history" class="card hidden no-print"><h2>Riwayat Investigasi</h2><div id="records"></div><div class="actions"><button class="secondary" onclick="exportBackup()">Ekspor Backup</button><button class="secondary" onclick="document.getElementById('restore').click()">Pulihkan Backup</button><input id="restore" type="file" accept="application/json" class="hidden"><button class="secondary" onclick="goHome()">Kembali</button></div><p class="small">Simpan file backup di tempat aman. Menghapus data aplikasi/perangkat dapat menghilangkan data lokal jika belum dicadangkan.</p></section>
-</main><footer>HSE Accident Investigation · Prototipe personal offline v1.0</footer>
+:root{--g:#14532d;--bg:#f3f6f4;--line:#d7e1da}*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px system-ui;color:#17231b}header{background:var(--g);color:#fff;padding:16px;position:sticky;top:0;z-index:2}h1{font-size:19px;margin:0}header small{opacity:.9}main{max-width:900px;margin:auto;padding:13px}.note{background:#e8f5e9;border:1px solid #b7dfbd;padding:10px;border-radius:9px;font-size:13px;margin-bottom:12px}nav{display:flex;gap:7px;overflow:auto;margin-bottom:12px}button{border:0;border-radius:8px;padding:10px 13px;background:#166534;color:white;font-weight:600;cursor:pointer}nav button{background:white;color:#14532d;border:1px solid var(--line)}nav button.active{background:var(--g);color:#fff}.panel{display:none;background:#fff;border:1px solid var(--line);border-radius:11px;padding:14px;margin-bottom:12px}.panel.active{display:block}h2{font-size:17px;color:var(--g);margin:0 0 13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{display:block;font-size:13px;font-weight:650;margin-bottom:4px}input,select,textarea{width:100%;padding:10px;border:1px solid #cbd5ce;border-radius:8px;font:inherit;background:#fff}textarea{min-height:78px;resize:vertical}.full{grid-column:1/-1}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}.secondary{background:#e7eee9;color:#173b25}.danger{background:#b42318}.card{border:1px solid var(--line);border-radius:9px;padding:11px;margin:8px 0}.small{font-size:12px;color:#526158}.photos{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.photos img{width:88px;height:78px;object-fit:cover;border-radius:7px}@media(max-width:580px){.grid{grid-template-columns:1fr}.full{grid-column:auto}}@media print{header,nav,.note,.actions,.noprint,footer{display:none!important}.panel{display:block!important;border:0;page-break-inside:avoid}body{background:#fff}main{padding:0}}
+</style></head>
+<body><header><h1>HSE Accident Investigation</h1><small>Personal Edition • Offline-first</small></header><main>
+<div class="note"><b>Mode offline.</b> Laporan disimpan di perangkat ini dan tidak dikirim ke server. Lakukan backup secara berkala.</div>
+<nav><button class="active" data-tab="form">Form Investigasi</button><button data-tab="history">Riwayat</button><button data-tab="backup">Backup & Panduan</button></nav>
+<section id="form" class="panel active"><h2>Formulir Investigasi Insiden</h2><form id="reportForm"><input type="hidden" id="recordId"><div class="grid">
+<div><label>Nomor laporan</label><input id="reportNo" placeholder="INV-HSE-001"></div><div><label>Tanggal investigasi</label><input id="investigationDate" type="date"></div>
+<div><label>Tanggal kejadian *</label><input id="incidentDate" type="date" required></div><div><label>Waktu kejadian</label><input id="incidentTime" type="time"></div>
+<div><label>Lokasi / afdeling / stasiun</label><input id="location"></div><div><label>Jenis kejadian</label><select id="incidentType"><option>Near Miss</option><option>First Aid Case (FAC)</option><option>Medical Treatment Case (MTC)</option><option>Lost Time Injury (LTI)</option><option>Fatality</option><option>Property Damage</option><option>Environmental Incident</option><option>Lainnya</option></select></div>
+<div><label>Klasifikasi risiko</label><select id="severity"><option>Rendah</option><option>Sedang</option><option>Tinggi</option><option>Kritis</option></select></div><div><label>Aktivitas saat kejadian</label><input id="activity"></div>
+<div><label>Nama korban / pihak terdampak</label><input id="victim"></div><div><label>Jabatan / perusahaan</label><input id="position"></div>
+<div class="full"><label>Uraian singkat kejadian</label><textarea id="summary"></textarea></div><div class="full"><label>Kronologi sebelum, saat, dan setelah kejadian</label><textarea id="chronology"></textarea></div>
+<div class="full"><label>Keterangan saksi</label><textarea id="witness"></textarea></div><div class="full"><label>Bukti / kondisi lapangan</label><textarea id="evidence"></textarea></div>
+<div class="full"><label>Foto dokumentasi (kamera / galeri, maksimal 5 foto)</label><input id="photos" type="file" accept="image/*" capture="environment" multiple><div id="photoPreview" class="photos"></div></div>
+<div class="full"><label>Tindakan / kondisi tidak aman</label><textarea id="unsafe"></textarea></div><div class="full"><label>Faktor individu / pekerjaan / lingkungan</label><textarea id="factors"></textarea></div>
+<div class="full"><label>Faktor organisasi / sistem manajemen</label><textarea id="organization"></textarea></div><div class="full"><label>Analisis 5 Why</label><textarea id="fiveWhy" placeholder="Why 1 ...&#10;Why 2 ...&#10;Why 3 ...&#10;Why 4 ...&#10;Why 5 ..."></textarea></div>
+<div class="full"><label>Akar penyebab</label><textarea id="rootCause"></textarea></div><div class="full"><label>Tindakan korektif dan pencegahan (CAPA)</label><textarea id="capa"></textarea></div>
+<div><label>PIC</label><input id="pic"></div><div><label>Target penyelesaian</label><input id="dueDate" type="date"></div><div><label>Status CAPA</label><select id="capaStatus"><option>Open</option><option>On Progress</option><option>Closed</option></select></div><div><label>Verifikasi oleh</label><input id="verifier"></div>
+<div class="full"><label>Lesson learned / pembelajaran</label><textarea id="lesson"></textarea></div><div><label>Disusun oleh</label><input id="preparedBy"></div><div><label>Diperiksa / disetujui oleh</label><input id="approvedBy"></div></div>
+<div class="actions"><button type="submit">Simpan Laporan</button><button type="button" class="secondary" onclick="newReport()">Form Baru</button><button type="button" class="secondary" onclick="window.print()">Cetak / Simpan PDF</button></div></form></section>
+<section id="history" class="panel"><h2>Riwayat Investigasi</h2><input id="searchBox" placeholder="Cari nomor, lokasi, korban, jenis..." oninput="renderHistory()"><div id="historyList"></div></section>
+<section id="backup" class="panel"><h2>Backup & Panduan</h2><div class="actions"><button onclick="exportBackup()">Backup Data (JSON)</button><label class="secondary" style="padding:10px;border-radius:8px">Pulihkan Backup <input id="restoreFile" type="file" accept="application/json" style="width:auto"></label></div><div class="card small"><b>Privasi & penyimpanan:</b> data disimpan di browser/perangkat menggunakan IndexedDB, tidak dikirim ke Supabase atau server. Backup sebelum berganti perangkat atau menghapus data browser. Simpan backup di tempat aman.</div><div class="card small"><b>Catatan analisis:</b> analisis faktor ini merupakan pendekatan ICAM-inspired, bukan perangkat lunak resmi atau sertifikasi ICAM. Aplikasi adalah alat bantu pencatatan internal; ikuti SOP dan ketentuan perusahaan.</div><div class="card small"><b>Instalasi:</b> buka alamat GitHub Pages saat online melalui Chrome Android, pilih menu ⋮ lalu Tambahkan ke layar utama / Install app. Buka sekali saat online agar cache offline terpasang. Ini PWA, bukan APK native.</div></section>
+<footer class="small" style="text-align:center;padding:18px">HSE Accident Investigation • Personal Edition</footer></main>
 <script>
-const DBKEY='hse_investigations_v1'; let currentPhotos=[]; let editingId=null;
-function getRecords(){try{return JSON.parse(localStorage.getItem(DBKEY)||'[]')}catch(e){return []}}
-function setRecords(x){localStorage.setItem(DBKEY,JSON.stringify(x));updateStats()}
-function updateStats(){let r=getRecords();document.getElementById('total').textContent=r.length;document.getElementById('last').textContent=r.length?r[r.length-1].number:'—'}
-function newForm(){editingId=null;currentPhotos=[];document.getElementById('investigation').reset();document.getElementById('photoPreview').textContent='Foto dapat dipilih dari galeri perangkat.';document.getElementById('investigation').classList.remove('hidden');document.getElementById('history').classList.add('hidden');document.querySelector('.card.no-print').classList.add('hidden');document.querySelector('[name=date]').value=new Date().toISOString().slice(0,10);document.querySelector('[name=reported]').value=new Date().toISOString().slice(0,10)}
-function goHome(){document.getElementById('investigation').classList.add('hidden');document.getElementById('history').classList.add('hidden');document.querySelector('.card.no-print').classList.remove('hidden')}
-function showRecords(){document.getElementById('history').classList.remove('hidden');document.getElementById('investigation').classList.add('hidden');document.querySelector('.card.no-print').classList.add('hidden');let r=getRecords();let el=document.getElementById('records');el.innerHTML='';if(!r.length){el.textContent='Belum ada data.';return}r.slice().reverse().forEach(x=>{let div=document.createElement('div');div.className='item';let title=document.createElement('b');title.textContent=x.number+' · '+x.location;let sub=document.createElement('div');sub.className='small';sub.textContent=(x.date||'')+' | '+(x.type||'')+' | '+(x.victim||'Tanpa nama');let btn=document.createElement('button');btn.className='secondary';btn.textContent='Buka / cetak';btn.onclick=()=>loadRecord(x.id);div.append(title,sub,btn);el.append(div)})}
-function formData(){let o={};new FormData(document.getElementById('investigation')).forEach((v,k)=>o[k]=v);return o}
-function saveRecord(){let f=document.getElementById('investigation');if(!f.reportValidity())return;let data=formData();data.id=editingId||Date.now();data.photos=currentPhotos;data.savedAt=new Date().toISOString();let r=getRecords();let ix=r.findIndex(x=>x.id===data.id);if(ix>=0)r[ix]=data;else r.push(data);try{setRecords(r);alert('Laporan tersimpan di perangkat ini.');goHome()}catch(e){alert('Penyimpanan gagal. Ukuran foto mungkin terlalu besar. Kurangi jumlah/ukuran foto dan coba lagi.')}}
-function loadRecord(id){let x=getRecords().find(a=>a.id===id);if(!x)return;editingId=id;currentPhotos=x.photos||[];let f=document.getElementById('investigation');f.reset();Object.keys(x).forEach(k=>{let el=f.elements[k];if(el&&typeof x[k]==='string')el.value=x[k]});document.getElementById('photoPreview').innerHTML='';currentPhotos.forEach(src=>{let im=document.createElement('img');im.src=src;document.getElementById('photoPreview').append(im)});document.getElementById('history').classList.add('hidden');document.getElementById('investigation').classList.remove('hidden');}
-document.getElementById('photos').addEventListener('change',async e=>{for(const file of e.target.files){if(file.size>1800000){alert('Pilih foto di bawah 1,8 MB agar penyimpanan offline tidak cepat penuh.');continue}let src=await new Promise(res=>{let rd=new FileReader();rd.onload=()=>res(rd.result);rd.readAsDataURL(file)});currentPhotos.push(src);let im=document.createElement('img');im.src=src;document.getElementById('photoPreview').append(im)}e.target.value=''});
-function printCurrent(){let d=formData();let html='<h1>FORMULIR INVESTIGASI KECELAKAAN KERJA</h1><p><b>Nomor:</b> '+esc(d.number)+' &nbsp; <b>Tanggal:</b> '+esc(d.date)+'</p>';let labels={location:'Lokasi/unit',activity:'Aktivitas',type:'Jenis kejadian',level:'Level investigasi',victim:'Korban/inisial',position:'Jabatan',injury:'Cedera/dampak',medical:'Penanganan medis',description:'Uraian kejadian',before:'Kondisi sebelum',during:'Kondisi saat',after:'Tindakan setelah',witness:'Saksi',evidence:'Bukti lain',direct:'Tindakan/kondisi langsung',individual:'Faktor individu',task:'Faktor tugas',equipment:'Faktor peralatan',environment:'Faktor lingkungan',organization:'Faktor organisasi',controls:'Pengendalian gagal',root:'Akar penyebab sistemik',capa:'CAPA',residual:'Risiko residual',lesson:'Lesson learned',investigator:'Investigator',reviewer:'Diperiksa oleh',approver:'Disetujui oleh'};for(let k in labels){if(d[k])html+='<h3>'+labels[k]+'</h3><p>'+esc(d[k]).replace(/\n/g,'<br>')+'</p>'}if(currentPhotos.length){html+='<h3>Dokumentasi Foto</h3>';currentPhotos.forEach(p=>html+='<img src="'+p+'" style="max-width:180px;max-height:160px;margin:6px">')}let w=window.open('','_blank');if(!w){alert('Popup cetak terblokir. Izinkan popup lalu coba lagi.');return}w.document.write('<html><head><title>Laporan '+esc(d.number)+'</title><style>body{font:12px Arial;padding:24px}h1{font-size:18px;color:#124734}h3{font-size:13px;margin-bottom:3px}p{margin-top:3px;white-space:pre-wrap}img{object-fit:contain}</style></head><body>'+html+'<hr><p>Disusun: ____________________ &nbsp; Diperiksa: ____________________ &nbsp; Disetujui: ____________________</p></body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),700)}
-function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function exportBackup(){let blob=new Blob([JSON.stringify(getRecords(),null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup_investigasi_hse.json';a.click();URL.revokeObjectURL(a.href)}
-document.getElementById('restore').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let x=JSON.parse(await f.text());if(!Array.isArray(x))throw Error();setRecords(x);alert('Backup berhasil dipulihkan.')}catch(err){alert('File backup tidak valid.')}e.target.value=''})
-updateStats();
-if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(err => console.log('Service worker belum aktif:', err))); }
-</script>
-</body></html>
+const DB_NAME='hse-accident-investigation',STORE='reports';let db,photoData=[];
+const fields=['reportNo','investigationDate','incidentDate','incidentTime','location','incidentType','severity','activity','victim','position','summary','chronology','witness','evidence','unsafe','factors','organization','fiveWhy','rootCause','capa','pic','dueDate','capaStatus','verifier','lesson','preparedBy','approvedBy'];
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>req.result.createObjectStore(STORE,{keyPath:'id'});req.onsuccess=()=>{db=req.result;resolve()};req.onerror=()=>reject(req.error)})}
+function getAll(){return new Promise((resolve,reject)=>{const r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+function putRecord(v){return new Promise((resolve,reject)=>{const r=db.transaction(STORE,'readwrite').objectStore(STORE).put(v);r.onsuccess=resolve;r.onerror=()=>reject(r.error)})}
+function deleteRecord(id){return new Promise((resolve,reject)=>{const r=db.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=resolve;r.onerror=()=>reject(r.error)})}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button,.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active');if(b.dataset.tab==='history')renderHistory()}));
+function newReport(){document.getElementById('reportForm').reset();document.getElementById('recordId').value='';photoData=[];document.getElementById('photoPreview').innerHTML=''}
+function compressImage(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=reject;reader.onload=()=>{const img=new Image();img.onerror=reject;img.onload=()=>{const scale=Math.min(1,1100/img.width),canvas=document.createElement('canvas');canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',.7))};img.src=reader.result};reader.readAsDataURL(file)})}
+document.getElementById('photos').addEventListener('change',async e=>{photoData=[];try{for(const file of [...e.target.files].slice(0,5))photoData.push(await compressImage(file));document.getElementById('photoPreview').innerHTML=photoData.map(src=>'<img src="'+src+'">').join('')}catch(err){alert('Ada foto yang tidak dapat dibaca.')}});
+document.getElementById('reportForm').addEventListener('submit',async e=>{e.preventDefault();const record={id:document.getElementById('recordId').value||crypto.randomUUID(),photos:photoData,updatedAt:new Date().toISOString()};fields.forEach(k=>record[k]=document.getElementById(k).value);try{await putRecord(record);alert('Laporan berhasil disimpan di perangkat ini.');newReport();await renderHistory()}catch(err){alert('Gagal menyimpan. Ruang penyimpanan mungkin penuh. Kurangi foto lalu coba lagi.')}});
+async function renderHistory(){if(!db)return;const q=(document.getElementById('searchBox').value||'').toLowerCase(),items=(await getAll()).sort((a,b)=>(b.incidentDate||'').localeCompare(a.incidentDate||'')),box=document.getElementById('historyList');box.innerHTML='';items.filter(x=>[x.reportNo,x.location,x.victim,x.incidentType].join(' ').toLowerCase().includes(q)).forEach(x=>{const card=document.createElement('div');card.className='card';const title=document.createElement('b');title.textContent=(x.reportNo||'Tanpa nomor')+' • '+(x.incidentType||'');const p=document.createElement('p');p.textContent=(x.incidentDate||'-')+' | '+(x.location||'-')+' | '+(x.victim||'-');const edit=document.createElement('button');edit.textContent='Buka / Edit';edit.onclick=()=>loadRecord(x);const del=document.createElement('button');del.textContent='Hapus';del.className='danger';del.onclick=async()=>{if(confirm('Hapus laporan ini?')){await deleteRecord(x.id);renderHistory()}};card.append(title,p,edit,del);box.append(card)});if(!items.length)box.textContent='Belum ada laporan tersimpan.'}
+function loadRecord(x){newReport();document.getElementById('recordId').value=x.id;fields.forEach(k=>document.getElementById(k).value=x[k]||'');photoData=x.photos||[];document.getElementById('photoPreview').innerHTML=photoData.map(src=>'<img src="'+src+'">').join('');document.querySelector('[data-tab="form"]').click();window.scrollTo(0,0)}
+async function exportBackup(){const data=await getAll(),blob=new Blob([JSON.stringify({app:'HSE Accident Investigation',version:1,exportedAt:new Date().toISOString(),reports:data},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='backup-hse-investigation-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url)}
+document.getElementById('restoreFile').addEventListener('change',async e=>{try{const file=e.target.files[0];if(!file)return;const data=JSON.parse(await file.text());if(!Array.isArray(data.reports))throw Error('invalid');if(confirm('Pulihkan '+data.reports.length+' laporan? Data dengan ID sama akan diperbarui.')){for(const item of data.reports)await putRecord(item);alert('Backup berhasil dipulihkan.');renderHistory()}}catch(err){alert('File backup tidak valid.')}e.target.value=''});
+openDB().then(renderHistory).catch(()=>alert('Browser tidak mendukung penyimpanan lokal yang dibutuhkan.'));if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+</script></body></html>
